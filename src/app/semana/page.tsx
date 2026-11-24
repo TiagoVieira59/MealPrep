@@ -20,7 +20,7 @@ function Warnings({ plan }: { plan: Plan }) {
       <h2 className="text-lg">Esta semana não cumpre tudo</h2>
       <ul className="num mt-2 space-y-1 text-sm">
         {over && <li>O custo é {eur(plan.cost)} para um orçamento de {eur(plan.budget)} (+{eur(plan.cost - plan.budget)}).</li>}
-        {plan.warnings.map((w, i) => <li key={i}><b>{names[w.day]}{plan.people.length > 1 ? ` (${plan.people.find((p) => p.id === w.person)?.name ?? w.person})` : ""}:</b> {[w.missingProtein > 0 && `faltam ${w.missingProtein} g de proteína`, w.kcalDiff < 0 && `${Math.abs(w.kcalDiff)} kcal abaixo da banda`, w.kcalDiff > 0 && `${w.kcalDiff} kcal acima da banda`].filter(Boolean).join("; ")}</li>)}
+        {plan.warnings.map((w, i) => <li key={i}><b>{names[w.day]}{plan.people.length > 1 ? ` (${plan.people.find((p) => p.id === w.person)?.name ?? w.person})` : ""}:</b> {[w.missingProtein > 0 && `faltam ${String(w.missingProtein).replace(".", ",")} g de proteína`, w.kcalDiff < 0 && `${Math.abs(w.kcalDiff)} kcal abaixo da banda`, w.kcalDiff > 0 && `${w.kcalDiff} kcal acima da banda`].filter(Boolean).join("; ")}</li>)}
       </ul>
       {plan.suggestions.length > 0 && <><p className="mt-3 text-sm font-medium">O que podes fazer:</p><ul className="mt-1 list-disc space-y-1 pl-5 text-sm">{plan.suggestions.map((s) => <li key={s}>{s}</li>)}</ul></>}
     </section>
@@ -53,7 +53,7 @@ export default function Semana() {
                   {SLOTS.map((s) => d.meals.find((m) => m.slot === s)).filter(Boolean).map((m) => {
                     const r = RECIPE.get(m!.recipeId)!, uses = cookInfo(plan, m!.cookId);
                     return (
-                      <li key={m!.slot} className="flex items-center gap-2.5"><Dish cat={r.cat} size={32} /><span className="min-w-0 text-sm leading-tight"><span className="block truncate">{m!.status === "fora" ? "A comer fora" : m!.status === "eu-trato" ? "Refeição própria" : r.name}</span>
+                      <li key={m!.slot} className="flex items-center gap-2.5"><Dish cat={r.cat} size={32} /><span className="min-w-0 text-sm leading-tight"><span className="line-clamp-2">{m!.status === "fora" ? "A comer fora" : m!.status === "eu-trato" ? "Refeição própria" : r.name}</span>
                         <span className="text-xs text-ink2">{SLOT_LABEL[m!.slot]}{uses.length > 1 && m!.status === "normal" && uses[0].d === i && uses[0].slot === m!.slot && <span className="ml-1.5 inline-flex items-center gap-0.5 text-primary"><Repeat2 size={11} />cozinhas 1×, comes {uses.length}×</span>}{uses.length > 1 && uses[0].d !== i && <span className="ml-1.5 text-primary">· sobras</span>}</span></span></li>);
                   })}
                 </ul>

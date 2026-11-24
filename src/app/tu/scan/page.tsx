@@ -45,7 +45,7 @@ export default function Scan() {
           <label className="text-sm font-medium">Proteína (g)<input className="field num mt-1" inputMode="numeric" value={prot} onChange={(e) => { setProt(e.target.value); setSrc("manual"); }} /></label></div>
         <label className="block text-sm font-medium">Substituir a refeição de hoje
           <select className="field mt-1" value={slot} onChange={(e) => setSlot(e.target.value as Slot)}>{SLOTS.filter((s) => ctx.plan.days[day].meals.some((m) => m.slot === s)).map((s) => <option key={s} value={s}>{SLOT_LABEL[s]}</option>)}</select></label>
-        {check && <p className="num text-sm text-ink2">Impacto no dia: <b className="text-ink">{check.kcal} kcal, {check.protein} g</b> de proteína · <span className={check.ok ? "font-medium text-ok" : "font-medium text-warn"}>{check.ok ? "o dia continua a cumprir" : "o dia deixa de cumprir"}</span></p>}
+        {check && <p className="num text-sm text-ink2">Impacto no dia: <b className="text-ink">{check.kcal} kcal, {String(check.protein).replace(".", ",")} g</b> de proteína · <span className={check.ok ? "font-medium text-ok" : "font-medium text-warn"}>{check.ok ? "o dia continua a cumprir" : "o dia deixa de cumprir"}</span></p>}
         <button className="btn btn-primary w-full" disabled={!check} onClick={() => { ctx.setPlan(setStatus(ctx.plan, ctx.prefs, day, slot, "eu-trato", { [ctx.me]: own }, src)); setApplied(true); }}>Substituir a refeição</button>
         <Msg ok text={applied ? "Refeição substituída. Vê em Hoje." : ""} />
       </section>

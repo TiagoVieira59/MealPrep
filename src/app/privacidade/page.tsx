@@ -5,7 +5,7 @@ export default function Page() {
       <h1 className="text-[34px] leading-tight">Privacidade</h1>
       <p className="text-ink2">A MealPrep recolhe o mínimo. Aqui está, em linguagem simples, o que fica onde.</p>
       <h2>No teu dispositivo</h2>
-      <ul><li>As medidas corporais (sexo, idade, altura, peso), as respostas do questionário, o registo do que comeste ou saltaste e os itens marcados na lista ficam só no teu telemóvel (localStorage). Não as enviamos para o servidor.</li></ul>
+      <ul><li>As medidas corporais (sexo, idade, altura, peso), as respostas do questionário, o registo do que comeste ou saltaste ficam só no teu telemóvel (localStorage); os itens marcados na lista também, exceto se usares um agregado (aí sincronizam com os outros membros). Não enviamos as medidas corporais para o servidor.</li></ul>
       <h2>No servidor (Supabase, UE)</h2>
       <ul><li>Uma conta anónima criada automaticamente (sem nome nem email, a menos que acrescentes um para usares noutro dispositivo).</li>
         <li>As metas diárias (calorias e proteína), o objetivo, as preferências (dieta, alergénios, exclusões, equipamento, orçamento, supermercado) e as semanas geradas.</li>

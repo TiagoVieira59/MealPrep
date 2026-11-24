@@ -11,7 +11,7 @@ const GOOGLE = process.env.NEXT_PUBLIC_GOOGLE_LOGIN === "1"; // preparado, desli
 export default function Conta() {
   const { user, anonymous } = useSession(), router = useRouter();
   const [email, setEmail] = useState(""), [pw, setPw] = useState(""), [msg, setMsg] = useState({ t: "", ok: false }), [busy, setBusy] = useState(false);
-  const run = async (f: () => Promise<string | void>) => { setBusy(true); setMsg({ t: "", ok: false }); try { const m = await f(); if (m) setMsg({ t: m, ok: true }); } catch (e) { setMsg({ t: (e as Error).message || "Algo correu mal.", ok: false }); } setBusy(false); };
+  const run = async (f: () => Promise<string | void>) => { setBusy(true); setMsg({ t: "", ok: false }); try { const m = await f(); if (m) setMsg({ t: m, ok: true }); } catch (e) { const m = (e as Error).message ?? ""; setMsg({ t: /rate limit/i.test(m) ? "Demasiados pedidos de email. Tenta mais tarde." : /invalid|valid/i.test(m) ? "Email inválido." : /already|registered/i.test(m) ? "Esse email já está em uso." : /password/i.test(m) ? "Palavra-passe inválida (mínimo 8 caracteres)." : /incorretos/.test(m) ? m : "Algo correu mal. Tenta de novo.", ok: false }); } setBusy(false); };
   const valid = /^\S+@\S+\.\S+$/.test(email) && pw.length >= 8;
   return (
     <Sub title="Conta" hint="Começaste com uma conta anónima automática: não há palavra-passe para esquecer.">
