@@ -1,9 +1,12 @@
 # PROGRESS
 ## Estado
-- Fase 0 em curso.
+- Fases 0, 1, 2 concluídas (ambiente, esqueleto+deploy, dados+validação).
 ## Próximo passo
-Fase 1 — esqueleto Next.js.
+Fase 3 — motor em src/lib/engine + testes vitest (tests/).
 ## Problemas conhecidos
 —
 ## Melhorias futuras
 —
+
+## Produção
+URL: https://mealprep-silk.vercel.app (alias público; os URLs por deployment têm proteção SSO).
