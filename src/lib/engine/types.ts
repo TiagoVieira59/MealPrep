@@ -28,7 +28,7 @@ export interface Prefs {
 export interface Extra { food: string; g: Record<string, number> }
 export interface PlannedMeal {
   slot: Slot; recipeId: string; cookId: string; scales: Record<string, number>; extras: Extra[];
-  status: "normal" | "fora" | "eu-trato"; own?: Record<string, { kcal: number; protein: number }>;
+  status: "normal" | "fora" | "eu-trato"; own?: Record<string, { kcal: number; protein: number }>; ownSrc?: "ia" | "manual";
 }
 export interface DayCheck { kcal: number; protein: number; ok: boolean; proteinOk: boolean; kcalOk: boolean; kcalLow: number; kcalHigh: number }
 export interface Day { meals: PlannedMeal[]; checks: Record<string, DayCheck> }

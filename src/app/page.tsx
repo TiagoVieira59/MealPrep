@@ -1,1 +1,2 @@
-export default function Page() { return <h1 className="text-3xl">Hoje</h1>; }
+import { DayView } from "@/components/DayView";
+export default function Page() { return <DayView />; }

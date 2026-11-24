@@ -42,3 +42,4 @@ input, select, textarea { font-size: 16px; }
 .tag-est { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--tint); color: var(--ink2); border: 1px solid var(--line); white-space: nowrap; }
 @media (hover: hover) { .btn-ghost:hover, .chip:hover { border-color: var(--primary); } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; } }
+.dish { background: color-mix(in oklab, hsl(var(--h) 65% 52%) 17%, var(--surface)); color: color-mix(in oklab, hsl(var(--h) 60% 38%) 80%, var(--ink)); }

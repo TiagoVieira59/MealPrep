@@ -49,9 +49,9 @@ export function applySwap(plan: Plan, p: Prefs, dayIdx: number, slot: Slot, reci
 }
 
 /** "fora" (mantém o resto do dia), "eu-trato" (reajusta as outras refeições) ou "normal". */
-export function setStatus(plan: Plan, p: Prefs, dayIdx: number, slot: Slot, status: PlannedMeal["status"], own?: PlannedMeal["own"]): Plan {
+export function setStatus(plan: Plan, p: Prefs, dayIdx: number, slot: Slot, status: PlannedMeal["status"], own?: PlannedMeal["own"], ownSrc?: "ia" | "manual"): Plan {
   const d = plan.days[dayIdx], old = d.meals.find((m) => m.slot === slot)!;
-  const nm: PlannedMeal = { ...old, status, own: status === "eu-trato" ? own : undefined };
+  const nm: PlannedMeal = { ...old, status, own: status === "eu-trato" ? own : undefined, ownSrc: status === "eu-trato" ? ownSrc : undefined };
   let meals = replaceMeal(d, slot, nm);
   if (status !== "fora") meals = resolveMeals(meals, p.people, allowedComplements(p));
   return refresh(plan, plan.days.map((x, i) => (i === dayIdx ? mkDay(meals, p) : x)));
