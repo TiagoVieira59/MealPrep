@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Bash(npm *)", "Bash(npx *)", "Bash(node *)",
+      "Bash(git *)", "Bash(gh *)",
+      "Bash(playwright-cli *)",
+      "Bash(bash scripts/*)",
+      "Bash(rg *)", "Bash(ls *)", "Bash(mkdir *)", "Bash(cp *)", "Bash(mv *)",
+      "Bash(head *)", "Bash(tail *)", "Bash(wc *)", "Bash(jq *)", "Bash(grep *)",
+      "Bash(kill *)", "Bash(lsof *)", "Bash(sleep *)", "Bash(openssl *)",
+      "Bash(rm -rf .next)", "Bash(rm -rf node_modules)", "Bash(rm -rf /tmp/qa*)",
+      "Bash(curl *api.nal.usda.gov*)", "Bash(curl *localhost*)", "Bash(curl *vercel.app*)",
+      "WebSearch",
+      "WebFetch(domain:fdc.nal.usda.gov)", "WebFetch(domain:api.nal.usda.gov)",
+      "WebFetch(domain:ai.google.dev)", "WebFetch(domain:supabase.com)",
+      "WebFetch(domain:nextjs.org)", "WebFetch(domain:vercel.com)",
+      "WebFetch(domain:motion.dev)", "WebFetch(domain:tailwindcss.com)"
+    ],
+    "deny": [
+      "Read(./.env)", "Read(./.env.*)", "Bash(cat .env*)",
+      "Bash(sudo *)",
+      "Bash(git push --force*)", "Bash(git push -f*)",
+      "Bash(gh repo delete*)",
+      "Bash(rm -rf ~*)", "Bash(rm -rf /*)"
+    ]
+  }
+}
