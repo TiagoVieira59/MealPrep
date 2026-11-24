@@ -3,6 +3,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Beef, Bean, CookingPot, Drumstick, Egg, Fish, Milk, Salad, Sandwich, Shell, Soup, CupSoda, Wheat, UtensilsCrossed, X, type LucideIcon } from "lucide-react";
 import { useEffect } from "react";
 import { DishArt } from "@/components/art";
+import COUNTS from "@/lib/photoCounts.json";
+import NONE from "../../data/photoNone.json";
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
 export const DISCLAIMER = "A MealPrep é uma ferramenta de planeamento, não aconselhamento médico.";
@@ -13,13 +15,18 @@ const CATS: Record<string, [number, LucideIcon]> = {
   ovos: [42, Egg], tosta: [28, Sandwich], iogurte: [330, Milk], aveia: [38, Wheat], batido: [350, CupSoda], sopa: [20, Soup], peixe: [200, Fish],
   carne: [8, Beef], ave: [34, Drumstick], massa: [15, UtensilsCrossed], arroz: [48, CookingPot], leguminosas: [100, Bean], salada: [140, Salad], marisco: [190, Shell], wrap: [60, Sandwich],
 };
-/** Ilustração por categoria: disco de cor própria + ícone, sempre no mesmo estilo (sem imagens de IA). */
-export function Dish({ cat, size = 56 }: { cat: string; size?: number }) {
-  const [h] = CATS[cat] ?? [120, UtensilsCrossed];
+const hash = (s: string) => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+/** Pratos cuja foto da categoria não os representa (ex.: tortilha, bifana) ficam com a ilustração. */
+/** Foto livre (Wikimedia Commons, ver /creditos) escolhida por prato; sem foto cai na ilustração da categoria. */
+export const photoOf = (cat: string, id = cat) => { const n = (COUNTS as Record<string, number>)[cat]; return n && !NONE.includes(id) ? `/food/${cat}-${hash(id) % n}.jpg` : null; };
+export function Dish({ cat, id, size = 56 }: { cat: string; id?: string; size?: number }) {
+  const [h] = CATS[cat] ?? [120];
+  const src = photoOf(cat, id);
+  const round = size <= 44 ? "rounded-full" : "rounded-2xl";
   return (
-    <span aria-hidden className="dish relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full" style={{ width: size, height: size, ["--h" as string]: h }}>
-      <svg className="absolute inset-0" viewBox="0 0 56 56"><circle cx="46" cy="10" r="10" fill="currentColor" opacity=".10" /><circle cx="8" cy="50" r="12" fill="currentColor" opacity=".08" /></svg>
-      <DishArt cat={cat} size={size * 0.9} />
+    <span aria-hidden className={`dish relative inline-grid shrink-0 place-items-center overflow-hidden ${round}`} style={{ width: size, height: size, ["--h" as string]: h }}>
+      {src ? /* eslint-disable-next-line @next/next/no-img-element */ <img src={src} alt="" width={size} height={size} loading="lazy" className="h-full w-full object-cover" />
+        : <DishArt cat={cat} size={size * 0.9} />}
     </span>
   );
 }
@@ -72,6 +79,6 @@ export const Footer = () => (
   <footer className="mt-10 space-y-1 text-xs text-ink2">
     <p>Dados nutricionais: USDA FoodData Central (SR Legacy), domínio público (CC0).</p>
     <p>A MealPrep é uma ferramenta de planeamento, não aconselhamento médico.</p>
-    <p><a className="inline-flex min-h-11 items-center px-2 underline" href="/privacidade">Privacidade</a><a className="inline-flex min-h-11 items-center px-2 underline" href="/termos">Termos</a></p>
+    <p><a className="inline-flex min-h-11 items-center px-2 underline" href="/privacidade">Privacidade</a><a className="inline-flex min-h-11 items-center px-2 underline" href="/creditos">Fotos</a><a className="inline-flex min-h-11 items-center px-2 underline" href="/termos">Termos</a></p>
   </footer>
 );

@@ -8,7 +8,7 @@ import { logKey, dateOf, fmtDay } from "@/lib/week";
 import { usePlan } from "@/lib/usePlan";
 import { Skeleton } from "@/components/DayView";
 import { MealSheets, cookInfo, type Ctx, type SheetState } from "@/components/MealParts";
-import { Dish, Footer } from "@/components/ui";
+import { Dish, Footer, photoOf } from "@/components/ui";
 
 const n1 = (n: number) => (Math.round(n * 10) / 10).toString().replace(".", ",");
 const EQ: Record<string, string> = { fogao: "fogão", forno: "forno", microondas: "micro-ondas", airfryer: "air fryer", robo: "robô de cozinha", liquidificadora: "liquidificadora" };
@@ -30,7 +30,8 @@ export default function Receita() {
       <Link href={`/dia/${d}`} className="btn btn-ghost mb-4 !min-h-11 w-fit gap-2 text-sm"><ArrowLeft size={16} />{fmtDay(dateOf(plan.weekStart, d), { weekday: "long" })}</Link>
       <div className="md:grid md:grid-cols-2 md:gap-10">
         <div>
-          <div className="flex items-center gap-4"><Dish cat={r.cat} size={96} /><div><p className="text-xs font-medium uppercase tracking-wide text-ink2">{SLOT_LABEL[slot as Slot]}</p><h1 className="text-[28px] leading-tight">{r.name}</h1></div></div>
+          <div className="-mx-4 mb-4 aspect-[16/9] max-h-72 w-[calc(100%+2rem)] overflow-hidden rounded-b-[28px] bg-tint md:mx-0 md:mt-0 md:w-full md:rounded-[24px]">{photoOf(r.cat, r.id) /* eslint-disable-next-line @next/next/no-img-element */ && <img src={photoOf(r.cat, r.id)!} alt="" className="h-full w-full object-cover" />}</div>
+          <div className="flex items-center gap-4"><div><p className="text-xs font-medium uppercase tracking-wide text-ink2">{SLOT_LABEL[slot as Slot]}</p><h1 className="text-[28px] leading-tight">{r.name}</h1></div></div>
           <p className="num mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink2"><span className="inline-flex items-center gap-1"><Clock size={15} />{r.minutes} min</span><span className="inline-flex items-center gap-1"><Flame size={15} />{r.temp}</span>
             {r.equipment.length > 0 && <span>Equipamento: {r.equipment.map((e) => EQ[e]).join(", ")}</span>}
             {uses.length > 1 && <span className="inline-flex items-center gap-1 text-primary"><Repeat2 size={15} />Cozinhas 1×, comes {uses.length}× (aguenta {r.fridgeDays} dias no frigorífico)</span>}</p>

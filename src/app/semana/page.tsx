@@ -53,7 +53,7 @@ export default function Semana() {
                   {SLOTS.map((s) => d.meals.find((m) => m.slot === s)).filter(Boolean).map((m) => {
                     const r = RECIPE.get(m!.recipeId)!, uses = cookInfo(plan, m!.cookId);
                     return (
-                      <li key={m!.slot} className="flex items-center gap-2.5"><Dish cat={r.cat} size={32} /><span className="min-w-0 text-sm leading-tight"><span className="line-clamp-2">{m!.status === "fora" ? "A comer fora" : m!.status === "eu-trato" ? "Refeição própria" : r.name}</span>
+                      <li key={m!.slot} className="flex items-center gap-2.5"><Dish cat={r.cat} id={r.id} size={40} /><span className="min-w-0 text-sm leading-tight"><span className="line-clamp-2">{m!.status === "fora" ? "A comer fora" : m!.status === "eu-trato" ? "Refeição própria" : r.name}</span>
                         <span className="text-xs text-ink2">{SLOT_LABEL[m!.slot]}{uses.length > 1 && m!.status === "normal" && uses[0].d === i && uses[0].slot === m!.slot && <span className="ml-1.5 inline-flex items-center gap-0.5 text-primary"><Repeat2 size={11} />cozinhas 1×, comes {uses.length}×</span>}{uses.length > 1 && uses[0].d !== i && <span className="ml-1.5 text-primary">· sobras</span>}</span></span></li>);
                   })}
                 </ul>

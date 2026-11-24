@@ -35,7 +35,7 @@ export function MealCard({ ctx, day, meal, onSheet }: { ctx: Ctx; day: number; m
   return (
     <li className={`card overflow-hidden transition-opacity ${st === "saltada" ? "opacity-60" : ""}`}>
       <Link href={`/receita/${day}/${meal.slot}`} className="flex items-center gap-3.5 p-4 active:bg-tint">
-        {meal.status === "normal" ? <Dish cat={r.cat} /> : <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-tint text-ink2"><Soup size={24} /></span>}
+        {meal.status === "normal" ? <Dish cat={r.cat} id={r.id} size={72} /> : <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-tint text-ink2"><Soup size={24} /></span>}
         <span className="min-w-0 flex-1">
           <span className="block text-xs font-medium uppercase tracking-wide text-ink2">{SLOT_LABEL[meal.slot]}{badge && <span className="ml-2 rounded-full bg-tint px-2 py-0.5 normal-case tracking-normal text-primary">{badge}</span>}</span>
           <span className="block font-display text-lg leading-snug">{meal.status === "fora" ? "A comer fora" : meal.status === "eu-trato" ? "Refeição própria" : r.name}</span>
@@ -85,7 +85,7 @@ export function MealSheets({ ctx, sheet, onClose }: { ctx: Ctx; sheet: SheetStat
         <p className="mb-3 text-sm text-ink2">Vê o impacto antes de aplicar. Nada muda até confirmares.</p>
         <ul className="space-y-3">
           {opts.map((o) => { const ro = RECIPE.get(o.recipeId)!; return (
-            <li key={o.recipeId} className="card p-3.5"><div className="flex items-center gap-3"><Dish cat={ro.cat} size={44} /><div className="min-w-0 flex-1"><p className="font-display text-base leading-snug">{ro.name}</p><p className="text-xs text-ink2">{ro.minutes} min</p></div></div>
+            <li key={o.recipeId} className="card p-3.5"><div className="flex items-center gap-3"><Dish cat={ro.cat} id={ro.id} size={44} /><div className="min-w-0 flex-1"><p className="font-display text-base leading-snug">{ro.name}</p><p className="text-xs text-ink2">{ro.minutes} min</p></div></div>
               <p className="num mt-2 text-sm">Proteína <b>{sign(o.dProtein, "g", 1)}</b> · Calorias <b>{sign(o.dKcal, "kcal")}</b> · Custo <b>{sign(o.dCost, "€", 2)}</b></p>
               <p className={`mt-0.5 text-sm font-medium ${o.dayOk ? "text-ok" : "text-warn"}`}>{o.dayOk ? "O dia continua a cumprir" : "O dia deixa de cumprir"}</p>
               <button className="btn btn-primary mt-3 w-full !min-h-11" onClick={() => apply(applySwap(plan, prefs, day, slot, o.recipeId))}>Aplicar esta troca</button></li>); })}
