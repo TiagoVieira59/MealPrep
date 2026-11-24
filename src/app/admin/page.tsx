@@ -20,7 +20,7 @@ export default function Admin() {
   if (!ok) return <div><h1 className="text-3xl">Administração</h1><p className="mt-2 text-ink2">Sem acesso. Inicia sessão com o email de administrador em Tu → Conta.</p></div>;
   return (
     <div>
-      <h1 className="text-[34px] leading-none">Administração</h1>
+      <h1 className="text-[28px] leading-none">Administração</h1>
       <div className="mt-4 flex flex-wrap gap-2" role="tablist">{["painel", "chat", "sugestões", "criadores"].map((t) => <button key={t} role="tab" aria-selected={tab === t} className="chip capitalize" aria-pressed={tab === t} onClick={() => setTab(t)}>{t}</button>)}</div>
       {tab === "painel" && <div className="num mt-5 grid grid-cols-3 gap-3 text-center">{[["Contas", ov.contas], ["Semanas geradas", ov.semanas], ["Scans hoje", ov.scansHoje]].map(([l, v]) => <div key={l as string} className="card p-4"><p className="text-3xl font-semibold">{v as number}</p><p className="text-sm text-ink2">{l}</p></div>)}</div>}
       {tab === "chat" && <div className="mt-5 grid gap-4 md:grid-cols-2"><ul className="space-y-2">{chat.map((c) => <li key={c.user}><button className="card w-full p-3 text-left" onClick={() => open(c.user)}><p className="truncate text-sm">{c.last}</p><p className="text-xs text-ink2">{c.user.slice(0, 8)} · {c.unread ? `${c.unread} por ler` : "lido"}</p></button></li>)}{!chat.length && <li className="text-ink2">Sem mensagens.</li>}</ul>

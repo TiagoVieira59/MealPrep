@@ -34,7 +34,7 @@ export default function Scan() {
   };
   const check = preview;
   return (
-    <Sub title="Scan the Plate" hint="Tira uma foto ao prato: a IA estima as calorias e a proteína. A foto não é guardada.">
+    <Sub title="Scan the Plate (fotografar o prato)" hint="Tira uma foto ao prato: a IA estima as calorias e a proteína. A foto não é guardada.">
       <input ref={input} type="file" accept="image/*" capture="environment" className="sr-only" aria-label="Escolher foto" onChange={(e) => e.target.files?.[0] && scan(e.target.files[0])} />
       <button className="btn btn-primary w-full gap-2" disabled={state === "busy"} onClick={() => input.current?.click()}><Camera size={20} />{state === "busy" ? "A analisar…" : "Tirar ou escolher uma foto"}</button>
       <Msg text={msg} />

@@ -120,7 +120,7 @@ export function Onboarding() {
       <header className="flex items-center gap-3 pb-6">
         <button className="btn btn-ghost !px-0 w-12" aria-label="Voltar" disabled={step === 0 && false} onClick={() => (step === 0 ? router.push("/") : go(step - 1))}><ArrowLeft /></button>
         <div className="h-2 flex-1 overflow-hidden rounded-full bg-tint" role="progressbar" aria-label="Progresso do questionário" aria-valuenow={Math.round(pct)} aria-valuemin={0} aria-valuemax={100}>
-          <motion.div className="h-full rounded-full bg-primary" animate={{ width: `${pct + (step < STEPS.length ? 100 / STEPS.length : 0)}%` }} transition={{ duration: 0.4, ease: EASE }} /></div>
+          <motion.div className="h-full w-full origin-left rounded-full bg-primary" animate={{ scaleX: (pct + (step < STEPS.length ? 100 / STEPS.length : 0)) / 100 }} transition={{ duration: 0.28, ease: EASE }} /></div>
         <span className="num w-12 text-right text-sm text-ink2">{Math.min(step + 1, STEPS.length)}/{STEPS.length}</span>
       </header>
       <AnimatePresence mode="wait" initial={false} custom={dir}>

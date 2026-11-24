@@ -13,7 +13,7 @@ import { Msg } from "@/components/Sub";
 import { Disclaimer, Footer, Sheet } from "@/components/ui";
 
 const Row = ({ href, icon: I, label, badge }: { href: string; icon: typeof Bot; label: string; badge?: number }) => (
-  <Link href={href} className="card flex min-h-14 items-center justify-between px-4"><span className="flex items-center gap-3"><I size={20} />{label}{!!badge && <span className="num rounded-full bg-protein px-2 text-xs font-semibold text-white" aria-label={`${badge} não lidas`}>{badge}</span>}</span><ChevronRight size={18} /></Link>
+  <Link href={href} className="card flex min-h-14 items-center justify-between px-4"><span className="flex items-center gap-3"><I size={20} />{label}{!!badge && <span className="num rounded-full bg-protein px-2 text-xs font-semibold text-on-primary" aria-label={`${badge} não lidas`}>{badge}</span>}</span><ChevronRight size={18} /></Link>
 );
 export default function Tu() {
   const p = usePlan(), router = useRouter(), { user } = useSession();
@@ -29,7 +29,7 @@ export default function Tu() {
   const remove = async () => { const r = await api("/api/account", undefined, "DELETE"); if (!r.ok) { setMsg({ t: r.data.erro ?? "Erro.", ok: false }); return; } await supabase().auth.signOut(); clearLocal(); location.assign("/bem-vindo"); };
   return (
     <div className="max-w-xl">
-      <h1 className="text-[34px] leading-none">Tu</h1>
+      <h1 className="text-[28px] leading-none">Tu</h1>
       <section className="mt-6"><Metas a={answers} set={(x) => setAnswers((a) => ({ ...a, ...x }))} compact /><p className="mt-3 text-sm text-ink2">As alterações às metas e às respostas aplicam-se à semana seguinte.</p></section>
       <section className="mt-8 space-y-3">
         <button className="card flex min-h-14 w-full items-center justify-between px-4 text-left" onClick={() => { setAnswers((a) => ({ ...a, step: 0 })); router.push("/bem-vindo"); }}><span className="flex items-center gap-3"><RefreshCw size={20} />Refazer questionário</span><ChevronRight size={18} /></button>
@@ -49,7 +49,7 @@ export default function Tu() {
         <button className="card flex min-h-14 w-full items-center gap-3 px-4 text-left text-err" onClick={() => setDel(true)}><Trash2 size={20} />Eliminar conta e dados</button></section>
       <div className="mt-8"><Disclaimer /></div>
       <Sheet open={del} onClose={() => setDel(false)} title="Eliminar conta?"><p className="text-ink2">Apaga a tua conta e todos os dados no servidor (planos, mensagens, sugestões). Não se pode desfazer.</p>
-        <div className="mt-4 grid gap-2"><button className="btn bg-err text-white" onClick={remove}>Sim, eliminar tudo</button><button className="btn btn-ghost" onClick={() => setDel(false)}>Cancelar</button></div></Sheet>
+        <div className="mt-4 grid gap-2"><button className="btn bg-err text-on-primary" onClick={remove}>Sim, eliminar tudo</button><button className="btn btn-ghost" onClick={() => setDel(false)}>Cancelar</button></div></Sheet>
       <Footer />
     </div>
   );

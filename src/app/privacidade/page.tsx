@@ -2,7 +2,7 @@ export const metadata = { title: "Privacidade — MealPrep" };
 export default function Page() {
   return (
     <article className="max-w-xl space-y-4 [&_h2]:mt-6 [&_h2]:text-2xl [&_ul]:list-disc [&_ul]:pl-5">
-      <h1 className="text-[34px] leading-tight">Privacidade</h1>
+      <h1 className="text-[28px] leading-tight">Privacidade</h1>
       <p className="text-ink2">A MealPrep recolhe o mínimo. Aqui está, em linguagem simples, o que fica onde.</p>
       <h2>No teu dispositivo</h2>
       <ul><li>As medidas corporais (sexo, idade, altura, peso), as respostas do questionário, o registo do que comeste ou saltaste ficam só no teu telemóvel (localStorage); os itens marcados na lista também, exceto se usares um agregado (aí sincronizam com os outros membros). Não enviamos as medidas corporais para o servidor.</li></ul>

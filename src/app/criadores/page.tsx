@@ -10,7 +10,7 @@ export default function Criadores() {
   const send = async () => { setBusy(true); const r = await api("/api/creators/apply", { ...f, links: f.links || undefined }); setBusy(false); setMsg({ t: r.ok ? "Recebemos a tua candidatura. Respondemos por email." : r.data.erro ?? "Erro.", ok: r.ok }); };
   return (
     <div className="max-w-xl">
-      <h1 className="text-[34px] leading-tight">Criadores</h1>
+      <h1 className="text-[28px] leading-tight">Criadores</h1>
       <p className="mt-2 text-ink2">Fazes conteúdo sobre alimentação? Candidata-te para falarmos de promoção. Não pedimos dados de pagamento; usamos estes dados só para te responder.</p>
       <form className="card mt-5 space-y-3 p-4" onSubmit={(e) => { e.preventDefault(); send(); }}>
         {([["name", "Nome", "text"], ["email", "Email", "email"], ["country", "País", "text"], ["tiktok", "@ do TikTok", "text"], ["links", "Outros links (opcional)", "text"]] as const).map(([k, l, t]) => (

@@ -25,7 +25,7 @@ export function DayView({ index }: { index?: number }) {
     <div className="md:grid md:grid-cols-[1fr_340px] md:gap-8">
       <div>
         <p className="text-sm font-medium text-ink2">{fmtDay(dateOf(plan.weekStart, idx))}</p>
-        <h1 className="mt-0.5 text-[34px] leading-none">{index == null ? "Hoje" : fmtDay(dateOf(plan.weekStart, idx), { weekday: "long" })}</h1>
+        <h1 className="mt-0.5 text-[28px] leading-none">{index == null ? "Hoje" : fmtDay(dateOf(plan.weekStart, idx), { weekday: "long" })}</h1>
         {notStarted && <p className="mt-2 rounded-xl bg-tint p-3 text-sm">A tua semana começa em {fmtDay(dateOf(plan.weekStart, 0))}. Estas são as refeições do primeiro dia.</p>}
         <div className="mt-3"><DayStatus check={check} big /></div>
         <ul className="mt-5 space-y-3">{SLOTS.map((s) => day.meals.find((m) => m.slot === s)).filter(Boolean).map((m) => <MealCard key={m!.slot} ctx={ctx} day={idx} meal={m!} onSheet={setSheet} />)}
@@ -35,7 +35,7 @@ export function DayView({ index }: { index?: number }) {
         <section className="card space-y-4 p-4" aria-label="Metas do dia">
           <Bar label="Calorias" unit="kcal" color="var(--kcal)" value={eaten.k} planned={t.kcal} target={person.kcal} lo={b.low} hi={b.high} />
           <Bar label="Proteína" unit="g" color="var(--protein)" value={eaten.p} planned={t.protein} target={person.protein} />
-          <p className="num text-xs text-ink2">Barra cheia = o que já comeste. Barra clara = o planeado ({check.kcal} kcal, {String(check.protein).replace(".", ",")} g). Faixa = banda {b.low}–{b.high} kcal.</p>
+          <p className="num text-xs text-ink2">Cheio = comido · claro = planeado ({check.kcal} kcal, {String(check.protein).replace(".", ",")} g) · faixa = banda {b.low}–{b.high} kcal.</p>
         </section>
         <Link href="/semana" className="btn btn-ghost w-full gap-2"><CalendarDays size={18} />Ver a semana</Link>
       </aside>

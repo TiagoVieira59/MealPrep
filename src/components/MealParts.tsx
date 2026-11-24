@@ -15,7 +15,7 @@ export function DayStatus({ check, big }: { check: DayCheck; big?: boolean }) {
   const reduce = useReducedMotion();
   if (check.ok) return (
     <span className={`inline-flex items-center gap-1.5 font-semibold text-ok ${big ? "text-base" : "text-sm"}`}>
-      <motion.span className="grid h-6 w-6 place-items-center rounded-full bg-ok text-on-primary" initial={reduce ? false : { scale: 0.3 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 520, damping: 16 }}><Check size={15} strokeWidth={3} /></motion.span>Dia cumprido no plano
+      <motion.span className="grid h-6 w-6 place-items-center rounded-full bg-ok text-on-primary" initial={reduce ? false : { scale: 0.3 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 520, damping: 16 }}><Check size={15} strokeWidth={3} /></motion.span>Plano do dia cumpre as metas
     </span>
   );
   const bits = [!check.proteinOk && "falta proteína", !check.kcalOk && (check.kcal < check.kcalLow ? "poucas kcal" : "kcal a mais")].filter(Boolean).join(" e ");

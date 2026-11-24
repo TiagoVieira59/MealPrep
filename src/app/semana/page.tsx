@@ -19,7 +19,7 @@ function Warnings({ plan }: { plan: Plan }) {
     <section className="mt-5 rounded-2xl border border-warn/40 bg-warn/10 p-4" role="alert">
       <h2 className="text-lg">Esta semana não cumpre tudo</h2>
       <ul className="num mt-2 space-y-1 text-sm">
-        {over && <li>O custo é {eur(plan.cost)} para um orçamento de {eur(plan.budget)} (+{eur(plan.cost - plan.budget)}).</li>}
+        {over && <li>O custo estimado é {eur(plan.cost)} para um orçamento de {eur(plan.budget)} (+{eur(plan.cost - plan.budget)}).</li>}
         {plan.warnings.map((w, i) => <li key={i}><b>{names[w.day]}{plan.people.length > 1 ? ` (${plan.people.find((p) => p.id === w.person)?.name ?? w.person})` : ""}:</b> {[w.missingProtein > 0 && `faltam ${String(w.missingProtein).replace(".", ",")} g de proteína`, w.kcalDiff < 0 && `${Math.abs(w.kcalDiff)} kcal abaixo da banda`, w.kcalDiff > 0 && `${w.kcalDiff} kcal acima da banda`].filter(Boolean).join("; ")}</li>)}
       </ul>
       {plan.suggestions.length > 0 && <><p className="mt-3 text-sm font-medium">O que podes fazer:</p><ul className="mt-1 list-disc space-y-1 pl-5 text-sm">{plan.suggestions.map((s) => <li key={s}>{s}</li>)}</ul></>}
@@ -33,7 +33,7 @@ export default function Semana() {
   const { plan, next, me } = p as unknown as Ctx, ti = todayIndex(plan), ok = plan.days.filter((d) => d.checks[me]?.ok).length;
   return (
     <div>
-      <h1 className="text-[34px] leading-none">A tua semana</h1>
+      <h1 className="text-[28px] leading-none">A tua semana</h1>
       <p className="mt-1 text-ink2">{fmtDay(dateOf(plan.weekStart, 0), { day: "numeric", month: "long" })} – {fmtDay(dateOf(plan.weekStart, 6), { day: "numeric", month: "long" })}</p>
       <div className="num mt-4 grid grid-cols-3 gap-2 text-center">
         <div className="card p-3"><Clock size={18} className="mx-auto text-ink2" /><p className="mt-1 font-semibold">{hm(plan.cookMinutes)}</p><p className="text-xs text-ink2">a cozinhar</p></div>

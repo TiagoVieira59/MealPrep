@@ -32,7 +32,7 @@ export function Bar({ value, target, lo, hi, color, label, unit, planned }: { va
     <div>
       <div className="mb-1.5 flex items-baseline justify-between text-sm"><span className="font-medium">{label}</span><span className="num text-ink2"><b className="text-ink">{Math.round(value)}</b> / {Math.round(target)} {unit}</span></div>
       <div className="relative h-3 overflow-hidden rounded-full bg-tint" role="progressbar" aria-label={label} aria-valuenow={Math.round(value)} aria-valuemin={0} aria-valuemax={Math.round(target)}>
-        {planned != null && <div className="absolute inset-y-0 left-0 rounded-full opacity-25" style={{ width: pct(planned), background: color }} />}
+        {planned != null && <div className="absolute inset-y-0 left-0 rounded-full opacity-45" style={{ width: pct(planned), background: color }} />}
         {lo != null && hi != null && <div className="absolute inset-y-0 border-x-2 border-ink/40 bg-ink/10" style={{ left: pct(lo), width: `calc(${pct(hi)} - ${pct(lo)})` }} />}
         <motion.div className="absolute inset-y-0 left-0 origin-left rounded-full" style={{ background: color, width: pct(value) }}
           initial={reduce ? false : { scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, ease: EASE }} />

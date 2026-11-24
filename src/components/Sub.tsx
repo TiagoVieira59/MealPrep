@@ -5,7 +5,7 @@ export function Sub({ title, children, hint }: { title: string; hint?: string; c
   return (
     <div className="max-w-xl">
       <Link href="/tu" className="btn btn-ghost mb-4 !min-h-11 w-fit gap-2 text-sm"><ArrowLeft size={16} />Tu</Link>
-      <h1 className="text-[32px] leading-tight">{title}</h1>
+      <h1 className="text-[28px] leading-tight">{title}</h1>
       {hint && <p className="mt-1 text-ink2">{hint}</p>}
       <div className="mt-5 space-y-4">{children}</div>
       <p className="mt-8 text-xs text-ink2">A MealPrep é uma ferramenta de planeamento, não aconselhamento médico. Preços e resultados da IA são estimativas.</p>

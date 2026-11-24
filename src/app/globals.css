@@ -41,5 +41,6 @@ input, select, textarea { font-size: 16px; }
 .field { width: 100%; min-height: 48px; padding: 0 14px; border-radius: var(--radius-control); border: 1.5px solid var(--line); background: var(--surface); }
 .tag-est { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--tint); color: var(--ink2); border: 1px solid var(--line); white-space: nowrap; }
 @media (hover: hover) { .btn-ghost:hover, .chip:hover { border-color: var(--primary); } }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 1ms !important; animation-duration: 1ms !important; animation-iteration-count: 1 !important; }
+  .animate-spin { animation: none !important; } }
 .dish { background: color-mix(in oklab, hsl(var(--h) 65% 52%) 17%, var(--surface)); color: color-mix(in oklab, hsl(var(--h) 60% 38%) 80%, var(--ink)); }
