@@ -8,3 +8,5 @@
 - "Chouriço" usa o registo USDA de chorizo (Sausage, pork, chorizo); "Bacalhau" = bacalhau cru demolhado (Fish, cod, Atlantic, raw).
 - Preços: €/kg base + fator por supermercado (estimativa), embalagens comuns; sem packs = a granel (arredonda a 100 g).
 - Alimentos enlatados (grão, feijão, atum, sardinha) pesam-se como vendidos/escorridos.
+- Motor: 2 faixas (almoço/jantar) com corridas de pratos repetidos (comprimento = max(repetição, ⌈7/cozinhas por semana⌉), limitado pelos dias de frigorífico). Solver por pessoa/dia: grelha 0,6–2,0 (0,05) + complementos (guloso, até 3). Procura local (≤160 avaliações, determinística) para orçamento e validade.
+- Sem pratos compatíveis para uma refeição: o plano sai sem essa refeição e a sugestão explica (não é erro).

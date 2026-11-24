@@ -1,0 +1,13 @@
+export * from "./types";
+export * from "./targets";
+export * from "./nutrition";
+export * from "./generate";
+export * from "./swap";
+export * from "./grocery";
+export * from "./filter";
+export { FOODS, RECIPES, FOOD, RECIPE, PRICES } from "./data";
+import { generatePlan } from "./generate";
+import type { Plan, Prefs } from "./types";
+const addDays = (iso: string, n: number) => { const d = new Date(iso + "T00:00:00Z"); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+export const generateNextWeek = (p: Prefs, prev: Plan): Plan => generatePlan(p, prev.seed + 1, addDays(prev.weekStart, 7));
+export { addDays };

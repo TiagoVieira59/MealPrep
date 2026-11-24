@@ -1,8 +1,8 @@
 # PROGRESS
 ## Estado
-- Fases 0, 1, 2 concluídas (ambiente, esqueleto+deploy, dados+validação).
+- Fases 0–3 concluídas (ambiente, esqueleto+deploy, dados+validação, motor+testes: 18 verdes).
 ## Próximo passo
-Fase 3 — motor em src/lib/engine + testes vitest (tests/).
+Fase 4 — UI principal: onboarding → metas → geração (POST /api/plan) → Hoje/Semana/Receita/Como calculamos/Lista/Tu; guardar no Supabase (plans, profiles). Motor em src/lib/engine (index.ts exporta tudo).
 ## Problemas conhecidos
 —
 ## Melhorias futuras
