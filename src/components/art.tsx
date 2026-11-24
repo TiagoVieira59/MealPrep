@@ -39,7 +39,7 @@ export function StoreArt({ id, size = 64 }: { id: StoreId; size?: number }) {
       <path {...S} d="M6 14h52l4 14H2z" fill={a} />
       {[0, 1, 2, 3, 4].map((i) => <path key={i} d={`M${6 + i * 10.4} 14h5.2l-1 14h-6.2z`} fill={i % 2 ? b : a} opacity={i % 2 ? 0.95 : 0} />)}
       <path {...S} d="M6 14h52l4 14H2z" fill="none" /><rect {...S} x="14" y="34" width="16" height="14" rx="2" fill="#bfe0ea" /><rect {...S} x="36" y="34" width="12" height="22" rx="2" fill="#8a6a4f" /><circle cx="44" cy="46" r="1.2" fill="#fff" />
-      <path {...S} d="M30 4h4" />
+      
     </Box>
   );
 }
