@@ -20,7 +20,10 @@ export async function buildHousehold(uid: string, seed: number, weekStart: strin
     protein: m.protein ?? (m.user_id === h!.owner ? prof.protein ?? NORMAL_PORTION.protein : NORMAL_PORTION.protein),
   }));
   const guests = base.people.filter((x) => x.id !== "me").slice(0, Math.max(0, 8 - people.length));
-  const plan = generatePlan({ ...base, people: [...people, ...guests] }, seed, weekStart);
+  const all = [...people, ...guests];
+  // O orçamento do questionário é por número de pessoas inicial; ao entrarem membros escala proporcionalmente.
+  const budget = Math.round((base.budget * all.length) / Math.max(1, base.people.length));
+  const plan = generatePlan({ ...base, budget, people: all }, seed, weekStart);
   const { data: row } = await sb.from("plans").insert({ user_id: uid, household_id: mem.household_id, week_start: weekStart, plan, seed: seed, engine_version: ENGINE_VERSION }).select("id").single();
   return { plan, rowId: row?.id, householdId: mem.household_id };
 }
