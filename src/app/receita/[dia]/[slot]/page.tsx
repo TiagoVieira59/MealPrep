@@ -30,7 +30,7 @@ export default function Receita() {
       <Link href={`/dia/${d}`} className="btn btn-ghost mb-4 !min-h-11 w-fit gap-2 text-sm"><ArrowLeft size={16} />{fmtDay(dateOf(plan.weekStart, d), { weekday: "long" })}</Link>
       <div className="md:grid md:grid-cols-2 md:gap-10">
         <div>
-          <div className="flex items-center gap-4"><Dish cat={r.cat} size={72} /><div><p className="text-xs font-medium uppercase tracking-wide text-ink2">{SLOT_LABEL[slot as Slot]}</p><h1 className="text-[28px] leading-tight">{r.name}</h1></div></div>
+          <div className="flex items-center gap-4"><Dish cat={r.cat} size={96} /><div><p className="text-xs font-medium uppercase tracking-wide text-ink2">{SLOT_LABEL[slot as Slot]}</p><h1 className="text-[28px] leading-tight">{r.name}</h1></div></div>
           <p className="num mt-4 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink2"><span className="inline-flex items-center gap-1"><Clock size={15} />{r.minutes} min</span><span className="inline-flex items-center gap-1"><Flame size={15} />{r.temp}</span>
             {r.equipment.length > 0 && <span>Equipamento: {r.equipment.map((e) => EQ[e]).join(", ")}</span>}
             {uses.length > 1 && <span className="inline-flex items-center gap-1 text-primary"><Repeat2 size={15} />Cozinhas 1×, comes {uses.length}× (aguenta {r.fridgeDays} dias no frigorífico)</span>}</p>

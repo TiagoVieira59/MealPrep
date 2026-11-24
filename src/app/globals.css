@@ -3,13 +3,13 @@
 :root {
   --bg: #faf6ee; --surface: #ffffff; --ink: #1e2923; --ink2: #55615a; --line: #e6dfd1;
   --primary: #1f6a55; --on-primary: #ffffff; --protein: #c2501f; --kcal: #b07a10;
-  --ok: #1f6a55; --warn: #a65a00; --err: #b3261e; --tint: #eef3ec;
+  --ok: #1f6a55; --warn: #a65a00; --err: #b3261e; --tint: #eef3ec; --hero-bg: #fbe9d3;
 }
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #121714; --surface: #1b221e; --ink: #eef1ec; --ink2: #a3aea6; --line: #2c3630;
     --primary: #5cc2a0; --on-primary: #0d1a14; --protein: #f08a5b; --kcal: #e3b04b;
-    --ok: #5cc2a0; --warn: #e3b04b; --err: #f2867d; --tint: #1f2a25;
+    --ok: #5cc2a0; --warn: #e3b04b; --err: #f2867d; --tint: #1f2a25; --hero-bg: #2b2a22;
   }
 }
 @theme inline {

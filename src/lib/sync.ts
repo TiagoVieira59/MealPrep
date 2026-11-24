@@ -38,7 +38,7 @@ export async function restoreFromServer(): Promise<boolean> {
   if (!prof?.prefs || !row) return false;
   const p = prof.prefs as Prefs;
   const a: Answers = { ...DEFAULT_ANSWERS, objective: (prof.objective as Answers["objective"]) ?? "nao-sei", diet: p.diet, allergens: p.allergens, excludedFoods: p.excludedFoods, excludedRecipes: p.excludedRecipes, likedFoods: p.likedFoods, likedRecipes: p.likedRecipes,
-    equipment: p.equipment, cooksPerWeek: p.cooksPerWeek, maxMinutes: p.maxMinutes, repetition: p.repetition, lunch: p.lunch, store: p.store, budget: p.budget, peopleCount: p.people.length, kcal: prof.kcal ?? undefined, protein: prof.protein ?? undefined, done: true, step: 0 };
+    equipment: p.equipment, cooksPerWeek: p.cooksPerWeek, maxMinutes: p.maxMinutes, repetition: p.repetition, lunch: p.lunch, store: p.store, stores: [p.store], budget: p.budget, peopleCount: p.people.length, kcal: prof.kcal ?? undefined, protein: prof.protein ?? undefined, done: true, step: 0 };
   writeLocal(K.answers, a); writeLocal(K.plan, row.plan as Plan); writeLocal(K.planRow, row.id);
   if (mem) { writeLocal(K.household, { id: mem.household_id }); writeLocal(K.me, u.id); }
   return true;

@@ -8,12 +8,15 @@ import { addDays, generatePlan, type Plan } from "@/lib/engine";
 import { K, readLocal, writeLocal } from "@/lib/store";
 import { mondayOf, todayIndex } from "@/lib/week";
 import { EASE } from "@/components/ui";
+import { Hero } from "@/components/art";
+import { stepIndex } from "@/components/Onboarding";
 
 const STAGES = ["A filtrar o catálogo pelas tuas regras", "A escolher os pratos da semana", "A ajustar as porções ao teu dia", "A verificar cada dia", "A preparar a lista de compras"];
 
 export default function Gerar() {
   const router = useRouter(), reduce = useReducedMotion();
   const [stage, setStage] = useState(0), [err, setErr] = useState(false), started = useRef(false);
+  const [over, setOver] = useState<{ plan: Plan; a: Answers; inForce: boolean; rowId: string | null } | null>(null);
   useEffect(() => {
     if (started.current) return; started.current = true;
     const a = readLocal<Answers>(K.answers, DEFAULT_ANSWERS);
@@ -37,11 +40,27 @@ export default function Gerar() {
       try {
         for (let i = 1; i <= STAGES.length; i++) await tick(i);
         const plan = await work;
+        // O orçamento escolhido é um limite: se as metas não cabem nele, o plano não é guardado sem o utilizador decidir.
+        if (plan.cost > a.budget + 1e-9) { setOver({ plan, a, inForce, rowId }); return; }
         writeLocal(inForce ? K.next : K.plan, plan); if (!inForce && rowId) writeLocal(K.planRow, rowId); writeLocal(K.answers, { ...a, done: true });
         setTimeout(() => router.replace(inForce ? "/semana" : "/"), reduce ? 100 : 500);
       } catch { setErr(true); }
     })();
   }, [router, reduce]);
+  if (over) {
+    const need = Math.ceil(over.plan.cost);
+    const accept = () => { const plan = { ...over.plan, budget: need }; writeLocal(over.inForce ? K.next : K.plan, plan); if (!over.inForce && over.rowId) writeLocal(K.planRow, over.rowId); writeLocal(K.answers, { ...over.a, budget: need, done: true }); router.replace(over.inForce ? "/semana" : "/"); };
+    const change = () => { writeLocal(K.answers, { ...over.a, done: false, step: stepIndex("budget") }); router.replace("/bem-vindo"); };
+    return (
+      <div className="mx-auto flex min-h-[calc(100dvh-40px)] max-w-md flex-col justify-center gap-4">
+        <Hero className="h-24 rounded-3xl" />
+        <h1 className="text-[28px] leading-tight">{over.a.budget} € não chegam para as tuas metas</h1>
+        <p className="text-ink2">O plano mais barato que cumpre as metas de proteína e kcal custa cerca de <b className="num text-ink">{over.plan.cost.toFixed(2).replace(".", ",")} €</b> <span className="tag-est">estimativa</span>. Não o vamos criar acima do orçamento sem tu decidires.</p>
+        <button className="btn btn-primary w-full" onClick={accept}>Usar {need} € por semana</button>
+        <button className="btn btn-ghost w-full" onClick={change}>Escolher outro valor ou outras regras</button>
+      </div>
+    );
+  }
   return (
     <div className="mx-auto flex min-h-[calc(100dvh-40px)] max-w-md flex-col justify-center">
       <h1 className="text-[28px] leading-tight">A preparar a tua semana</h1>

@@ -14,3 +14,7 @@ Verificar produção após cada push; ver Melhorias futuras.
 4. Trap de foco nas folhas; testes E2E automáticos.
 ## Produção
 URL: https://mealprep-silk.vercel.app
+
+## Melhorias futuras (ronda ilustrações)
+- Complementos do prato deviam respeitar o tipo de prato (ex.: atum num dal).
+- Lista de compras sem ilustrações por categoria; esconder a barra de separadores em /gerar.

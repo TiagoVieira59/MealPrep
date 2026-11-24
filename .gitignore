@@ -2,13 +2,7 @@ node_modules/
 .next/
 .vercel/
 .env*
-!.env.example
 *.log
 /tmp/
 .DS_Store
 supabase/.temp/
-coverage/
-out/
-*.tsbuildinfo
-next-env.d.ts
-.vercel

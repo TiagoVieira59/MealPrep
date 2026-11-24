@@ -4,15 +4,31 @@ import { ArrowLeft, Check, Minus, Plus, Search, ThumbsUp, Ban } from "lucide-rea
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { DEFAULT_ANSWERS, type Answers } from "@/lib/answers";
-import { FOODS, RECIPES, type Allergen, type Equipment } from "@/lib/engine";
+import { FOODS, RECIPES, type Allergen, type Equipment, type StoreId } from "@/lib/engine";
 import { K, useLocal } from "@/lib/store";
 import { Disclaimer, EASE } from "@/components/ui";
 import { Metas } from "@/components/Metas";
+import { EquipArt, StoreArt } from "@/components/art";
 
 const ALLERGENS: [Allergen, string][] = [["gluten", "Glúten"], ["crustaceos", "Crustáceos"], ["ovos", "Ovos"], ["peixe", "Peixe"], ["amendoim", "Amendoim"], ["soja", "Soja"], ["leite", "Leite"], ["frutos_casca_rija", "Frutos de casca rija"], ["aipo", "Aipo"], ["mostarda", "Mostarda"], ["sesamo", "Sésamo"], ["sulfitos", "Sulfitos"], ["tremoco", "Tremoço"], ["moluscos", "Moluscos"]];
 const EQUIP: [Equipment, string][] = [["fogao", "Fogão"], ["forno", "Forno"], ["microondas", "Micro-ondas"], ["airfryer", "Air fryer"], ["robo", "Robô de cozinha"], ["liquidificadora", "Liquidificadora"]];
 
+const STORES: [StoreId, string][] = [["continente", "Continente"], ["pingo-doce", "Pingo Doce"], ["lidl", "Lidl"], ["mercadona", "Mercadona"], ["aldi", "Aldi"], ["intermarche", "Intermarché"]];
 type Set = (p: Partial<Answers>) => void;
+/** Grelha de cartões com ilustração e escolha múltipla. */
+function PicGrid<T extends string>({ values, items, onChange }: { values: T[]; items: { v: T; t: string; art: React.ReactNode }[]; onChange: (v: T[]) => void }) {
+  return (
+    <div className="grid grid-cols-2 gap-3" role="group">
+      {items.map(({ v, t, art }) => { const on = values.includes(v); return (
+        <button key={v} aria-pressed={on} onClick={() => onChange(on ? values.filter((x) => x !== v) : [...values, v])}
+          className={`card relative flex min-h-32 flex-col items-center justify-center gap-2 p-3 transition-[transform,background,border-color] duration-150 active:scale-[.97] ${on ? "!border-primary bg-tint ring-2 ring-primary" : ""}`}>
+          <span className="transition-transform duration-200" style={{ transform: on ? "scale(1.08)" : undefined }}>{art}</span>
+          <span className="text-sm font-semibold">{t}</span>
+          {on && <span className="absolute right-2 top-2 grid h-6 w-6 place-items-center rounded-full bg-primary text-on-primary"><Check size={14} /></span>}
+        </button>); })}
+    </div>
+  );
+}
 const Choice = <T extends string | number>({ value, options, onPick, cols = 1 }: { value: T | undefined; options: { v: T; t: string; d?: string }[]; onPick: (v: T) => void; cols?: 1 | 2 }) => (
   <div role="radiogroup" className={`grid gap-3 ${cols === 2 ? "grid-cols-2" : ""}`}>
     {options.map((o) => (
@@ -94,17 +110,19 @@ const STEPS: StepDef[] = [
     body: (a, s) => <Choice value={a.repetition} onPick={(v) => s({ repetition: v })} options={[{ v: "pouca", t: "Pouca", d: "Quase todas as refeições são pratos novos" }, { v: "media", t: "Média", d: "Cada prato come-se até 2 vezes" }, { v: "muita", t: "Muita", d: "Cada prato come-se até 3 ou 4 vezes" }]} /> },
   { id: "lunch", title: "O almoço é quente ou frio?", hint: "Se levas marmita sem micro-ondas, escolhe frio.", valid: () => true,
     body: (a, s) => <Choice value={a.lunch} onPick={(v) => s({ lunch: v })} options={[{ v: "quente", t: "Quente" }, { v: "frio", t: "Frio", d: "Saladas, sanduíches e pratos que se comem frios" }]} /> },
-  { id: "equipment", title: "Que equipamento tens?", valid: (a) => a.equipment.length > 0, body: (a, s) => <Chips values={a.equipment} options={EQUIP} onChange={(equipment) => s({ equipment })} /> },
+  { id: "equipment", title: "Que equipamento tens?", hint: "Toca para escolher um ou vários.", valid: (a) => a.equipment.length > 0, body: (a, s) => <PicGrid values={a.equipment} onChange={(equipment) => s({ equipment })} items={EQUIP.map(([v, t]) => ({ v, t, art: <EquipArt id={v} size={64} /> }))} /> },
   { id: "diet", title: "Segues alguma dieta?", valid: () => true,
     body: (a, s) => <Choice value={a.diet} onPick={(v) => s({ diet: v })} cols={2} options={[{ v: "omnivora", t: "Omnívora" }, { v: "vegetariana", t: "Vegetariana" }, { v: "vegana", t: "Vegana" }, { v: "pescetariana", t: "Pescetariana" }, { v: "lowcarb", t: "Low-carb" }]} /> },
   { id: "allergens", title: "Tens alergias ou intolerâncias?", hint: "Os 14 alergénios da UE. Nunca aparecem nos teus pratos.", valid: () => true, body: (a, s) => <Chips values={a.allergens} options={ALLERGENS} onChange={(allergens) => s({ allergens })} /> },
   { id: "likes", title: "Há algo de que gostes muito ou queiras evitar?", hint: "Opcional. Pesquisa ingredientes ou pratos.", valid: () => true, body: (a, s) => <Likes a={a} set={s} /> },
-  { id: "store", title: "Onde fazes as compras?", valid: () => true,
-    body: (a, s) => <Choice value={a.store} onPick={(v) => s({ store: v })} cols={2} options={[{ v: "continente", t: "Continente" }, { v: "pingo-doce", t: "Pingo Doce" }, { v: "lidl", t: "Lidl" }, { v: "mercadona", t: "Mercadona" }, { v: "aldi", t: "Aldi" }, { v: "intermarche", t: "Intermarché" }]} /> },
+  { id: "store", title: "Onde fazes as compras?", hint: "Podes escolher mais do que uma loja. Compramos cada coisa onde sai mais barato.", valid: (a) => (a.stores?.length ?? 0) > 0,
+    body: (a, s) => <PicGrid values={a.stores ?? [a.store]} onChange={(stores) => s({ stores, store: stores[0] })} items={STORES.map(([v, t]) => ({ v, t, art: <StoreArt id={v} size={64} /> }))} /> },
   { id: "budget", title: "Qual é o orçamento semanal?", hint: "Para a comida da semana, para todo o agregado.", valid: (a) => num(a.budget, 10, 1000),
     body: (a, s) => <div className="space-y-4"><Num value={a.budget} onChange={(budget) => s({ budget })} min={10} max={1000} unit="€" step={5} /><div className="flex flex-wrap gap-2">{[30, 45, 60, 80, 100, 140].map((n) => <button key={n} className="chip" aria-pressed={a.budget === n} onClick={() => s({ budget: n })}>{n} €</button>)}</div></div> },
   { id: "people", title: "Quantas pessoas no agregado?", hint: "Contigo incluído. O prato é o mesmo; as porções escalam por pessoa.", valid: () => true, body: (a, s) => <Num value={a.peopleCount} onChange={(n) => s({ peopleCount: n ?? 1 })} min={1} max={6} unit="pessoas" /> },
 ];
+
+export const stepIndex = (id: string) => STEPS.findIndex((x) => x.id === id);
 
 export function Onboarding() {
   const router = useRouter(), reduce = useReducedMotion();

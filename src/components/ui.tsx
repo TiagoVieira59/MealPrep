@@ -2,6 +2,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Beef, Bean, CookingPot, Drumstick, Egg, Fish, Milk, Salad, Sandwich, Shell, Soup, CupSoda, Wheat, UtensilsCrossed, X, type LucideIcon } from "lucide-react";
 import { useEffect } from "react";
+import { DishArt } from "@/components/art";
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
 export const DISCLAIMER = "A MealPrep é uma ferramenta de planeamento, não aconselhamento médico.";
@@ -14,11 +15,11 @@ const CATS: Record<string, [number, LucideIcon]> = {
 };
 /** Ilustração por categoria: disco de cor própria + ícone, sempre no mesmo estilo (sem imagens de IA). */
 export function Dish({ cat, size = 56 }: { cat: string; size?: number }) {
-  const [h, Icon] = CATS[cat] ?? [120, UtensilsCrossed];
+  const [h] = CATS[cat] ?? [120, UtensilsCrossed];
   return (
     <span aria-hidden className="dish relative inline-grid shrink-0 place-items-center overflow-hidden rounded-full" style={{ width: size, height: size, ["--h" as string]: h }}>
       <svg className="absolute inset-0" viewBox="0 0 56 56"><circle cx="46" cy="10" r="10" fill="currentColor" opacity=".10" /><circle cx="8" cy="50" r="12" fill="currentColor" opacity=".08" /></svg>
-      <Icon size={size * 0.46} strokeWidth={1.6} className="relative" />
+      <DishArt cat={cat} size={size * 0.9} />
     </span>
   );
 }
@@ -71,6 +72,6 @@ export const Footer = () => (
   <footer className="mt-10 space-y-1 text-xs text-ink2">
     <p>Dados nutricionais: USDA FoodData Central (SR Legacy), domínio público (CC0).</p>
     <p>A MealPrep é uma ferramenta de planeamento, não aconselhamento médico.</p>
-    <p><a className="inline-block px-2 py-3 underline" href="/privacidade">Privacidade</a><a className="inline-block px-2 py-3 underline" href="/termos">Termos</a></p>
+    <p><a className="inline-flex min-h-11 items-center px-2 underline" href="/privacidade">Privacidade</a><a className="inline-flex min-h-11 items-center px-2 underline" href="/termos">Termos</a></p>
   </footer>
 );

@@ -1,4 +1,5 @@
 "use client";
+import { Hero } from "@/components/art";
 import { CalendarDays, Soup } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -24,6 +25,7 @@ export function DayView({ index }: { index?: number }) {
   return (
     <div className="md:grid md:grid-cols-[1fr_340px] md:gap-8">
       <div>
+        <div className="-mx-4 -mt-4 mb-4 h-24 overflow-hidden rounded-b-[28px] bg-[var(--hero-bg)] md:mx-0 md:mt-0 md:rounded-[24px]"><Hero className="h-full" /></div>
         <p className="text-sm font-medium text-ink2">{fmtDay(dateOf(plan.weekStart, idx))}</p>
         <h1 className="mt-0.5 text-[28px] leading-none">{index == null ? "Hoje" : fmtDay(dateOf(plan.weekStart, idx), { weekday: "long" })}</h1>
         {notStarted && <p className="mt-2 rounded-xl bg-tint p-3 text-sm">A tua semana começa em {fmtDay(dateOf(plan.weekStart, 0))}. Estas são as refeições do primeiro dia.</p>}

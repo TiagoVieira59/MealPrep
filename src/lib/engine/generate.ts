@@ -55,7 +55,7 @@ const cookMinutes = (days: Day[]) => { const seen = new Set<string>(); let m = 0
 
 function score(days: Day[], p: Prefs) {
   const cost = planCost(days, p.people, p.store), inv = invalidCount(days), over = Math.max(0, cost - p.budget);
-  return { cost, inv, over, total: inv * 100 + over * 10 + cost * 0.001 };
+  return { cost, inv, over, total: inv * 100 + over * 1000 + cost * 0.001 };
 }
 
 function localSearch(t: Tracks, p: Prefs, r: () => number, pools: Record<Slot, Recipe[]>): { t: Tracks; days: Day[] } {

@@ -11,3 +11,6 @@
 - Motor: 2 faixas (almoço/jantar) com corridas de pratos repetidos (comprimento = max(repetição, ⌈7/cozinhas por semana⌉), limitado pelos dias de frigorífico). Solver por pessoa/dia: grelha 0,6–2,0 (0,05) + complementos (guloso, até 3). Procura local (≤160 avaliações, determinística) para orçamento e validade.
 - Sem pratos compatíveis para uma refeição: o plano sai sem essa refeição e a sugestão explica (não é erro).
 - Agregado: o orçamento escala com o n.º de pessoas (orçamento do questionário × membros/pessoas iniciais).
+- Lojas: escolha múltipla; o plano usa a insígnia mais barata das escolhidas (compra-se cada coisa onde sai mais barato).
+- Orçamento é limite: se o plano mais barato que cumpre as metas o excede, o ecrã de geração pede decisão (usar o valor mínimo ou mudar) em vez de guardar um plano acima do orçamento.
+- Ilustrações próprias em SVG (src/components/art.tsx): equipamento, lojas (sem logótipos), pratos por categoria e faixa no Hoje; sem imagens externas nem IA.
