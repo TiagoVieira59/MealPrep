@@ -26,7 +26,7 @@ export function savePlan(plan: Plan) {
 export async function pullHouseholdPlan(): Promise<void> {
   const hh = readLocal<HouseholdLocal | null>(K.household, null); if (!hh) return;
   const { data } = await supabase().from("plans").select("id,plan").eq("household_id", hh.id).lte("week_start", addDays(mondayOf(), 7)).order("created_at", { ascending: false }).limit(1).maybeSingle();
-  if (data && data.id !== readLocal<string | null>(K.planRow, null)) { writeLocal(K.planRow, data.id); const pl = data.plan as Plan; writeLocal(pl.weekStart <= mondayOf() ? K.plan : K.next, pl); }
+  if (data && data.id !== readLocal<string | null>(K.planRow, null)) { writeLocal(K.planRow, data.id); const pl = data.plan as Plan; writeLocal(K.plan, pl); writeLocal(K.next, null); }
 }
 
 /** Noutro dispositivo: reconstrói respostas (sem medidas corporais) e a última semana a partir do servidor. */

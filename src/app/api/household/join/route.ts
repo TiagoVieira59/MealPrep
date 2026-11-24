@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { adminClient } from "@/lib/supabase/server";
 import { err, hmac, requireUser } from "@/lib/server/auth";
+import { buildHousehold } from "@/lib/server/household";
 
 export async function POST(req: Request) {
   const u = await requireUser(); if (!u) return err("Sem sessão.", 401);
@@ -15,5 +16,8 @@ export async function POST(req: Request) {
   const { count } = await sb.from("household_members").select("*", { count: "exact", head: true }).eq("household_id", h.id);
   if ((count ?? 0) >= 6) return err("O agregado está cheio.", 409);
   await sb.from("household_members").insert({ household_id: h.id, user_id: u.id, kcal: b.kcal ?? null, protein: b.protein ?? null });
-  return NextResponse.json({ id: h.id });
+  // Reaproveita a semana mais recente do agregado, agora com as porções do novo membro.
+  const { data: last } = await sb.from("plans").select("seed,week_start").eq("household_id", h.id).order("created_at", { ascending: false }).limit(1).maybeSingle();
+  if (last) await buildHousehold(u.id, last.seed, last.week_start);
+  return NextResponse.json({ id: h.id, hasPlan: !!last });
 }

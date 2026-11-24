@@ -6,7 +6,7 @@ import { K, useLocal } from "@/lib/store";
 import { api, useSession } from "@/lib/useSession";
 import { usePlan } from "@/lib/usePlan";
 import { Msg, Sub } from "@/components/Sub";
-import type { HouseholdLocal } from "@/lib/sync";
+import { pullHouseholdPlan, type HouseholdLocal } from "@/lib/sync";
 import { writeLocal } from "@/lib/store";
 
 export default function Agregado() {
@@ -19,7 +19,9 @@ export default function Agregado() {
     router.push("/gerar"); // gera a semana para todos os membros
   };
   const create = async () => { setBusy(true); const r = await api<{ id: string; code: string }>("/api/household/create", targets()); setBusy(false); if (!r.ok) return setMsg({ t: r.data.erro ?? "Erro.", ok: false }); await after(r.data.id, r.data.code); };
-  const join = async () => { setBusy(true); const r = await api<{ id: string }>("/api/household/join", { code, ...targets() }); setBusy(false); if (!r.ok) return setMsg({ t: r.data.erro ?? "Erro.", ok: false }); await after(r.data.id); };
+  const join = async () => { setBusy(true); const r = await api<{ id: string; hasPlan: boolean }>("/api/household/join", { code, ...targets() }); setBusy(false); if (!r.ok) return setMsg({ t: r.data.erro ?? "Erro.", ok: false });
+    if (!r.data.hasPlan) return after(r.data.id);
+    setHh({ id: r.data.id }); writeLocal(K.me, user!.id); await pullHouseholdPlan(); router.push("/semana"); };
   const leave = async () => { const { supabase } = await import("@/lib/supabase/client"); await supabase().from("household_members").delete().eq("user_id", user!.id); setHh(null); writeLocal(K.me, "me"); setMsg({ t: "Saíste do agregado.", ok: true }); };
   return (
     <Sub title="Agregado" hint="Partilha a semana e a lista com quem come contigo. O prato é o mesmo; as porções escalam por pessoa.">

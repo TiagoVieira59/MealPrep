@@ -18,8 +18,8 @@ export default function Gerar() {
     if (started.current) return; started.current = true;
     const a = readLocal<Answers>(K.answers, DEFAULT_ANSWERS);
     if (!a.kcal) { router.replace("/bem-vindo"); return; }
-    const prev = readLocal<Plan | null>(K.plan, null);
-    const inForce = !!prev && todayIndex(prev) !== -1; // semana atual ainda em curso: as alterações aplicam-se à seguinte
+    const prev = readLocal<Plan | null>(K.plan, null), hh0 = readLocal<{ id: string } | null>(K.household, null);
+    const inForce = !hh0 && !!prev && todayIndex(prev) !== -1; // semana atual ainda em curso: as alterações aplicam-se à seguinte
     const prefs = toPrefs(a), weekStart = inForce ? addDays(prev!.weekStart, 7) : mondayOf(), seed = (prev?.seed ?? Math.floor(Math.random() * 1e6)) + 1;
     const hh = readLocal<{ id: string } | null>(K.household, null);
     let rowId: string | null = null;
