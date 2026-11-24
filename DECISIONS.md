@@ -14,3 +14,4 @@
 - Lojas: escolha múltipla; o plano usa a insígnia mais barata das escolhidas (compra-se cada coisa onde sai mais barato).
 - Orçamento é limite: se o plano mais barato que cumpre as metas o excede, o ecrã de geração pede decisão (usar o valor mínimo ou mudar) em vez de guardar um plano acima do orçamento.
 - Ilustrações próprias em SVG (src/components/art.tsx): equipamento, lojas (sem logótipos), pratos por categoria e faixa no Hoje; sem imagens externas nem IA.
+- Fotos: Wikimedia Commons (licenças livres), 41 fotos por categoria, escolha por hash do prato; pratos sem foto adequada usam ilustração (data/photoNone.json); créditos em /creditos.

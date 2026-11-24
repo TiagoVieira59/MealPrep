@@ -18,3 +18,4 @@ URL: https://mealprep-silk.vercel.app
 ## Melhorias futuras (ronda ilustrações)
 - Complementos do prato deviam respeitar o tipo de prato (ex.: atum num dal).
 - Lista de compras sem ilustrações por categoria; esconder a barra de separadores em /gerar.
+- Fotos por prato (não só por categoria); o ideal é uma foto específica para cada uma das 69 receitas.
